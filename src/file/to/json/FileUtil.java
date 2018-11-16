@@ -17,7 +17,9 @@ public class FileUtil {
 		// 모든 voca 를 저장할 장소
 		Map<String, String> map = new HashMap<>();
 		try {
-			File file = new File("resource/voca.txt");
+//			File file = new File("resource/voca.txt");
+			File file = new File("resource", "voca.txt");
+			
 			// file 에서 한줄씩 읽어와 List 에 저장시킨다.
 			List<String> inputList = FileUtils.readLines(file, StandardCharsets.UTF_8.name());
 			
@@ -74,7 +76,7 @@ public class FileUtil {
 			}else if(!ruleEndChar) {
 				// 끝말에 이어서 쓰지 않았다면,
 				System.out.println(input + " => 끝말에 이어서 써주세요");
-			}else if(!gamerList.contains(input)) {
+			}else if(gamerList.contains(input)) {
 				// 이미 사용된 단어라면,
 				System.out.println("이미 사용된 단어입니다.");
 			}
