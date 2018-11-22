@@ -3,6 +3,9 @@ package file.to.json;
 
 import java.awt.CheckboxGroup;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,7 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class MemberRegister extends JFrame{
+import file.to.json.util.GetStringUtil;
+import javafx.scene.control.TextInputDialog;
+
+public class MemberRegister extends JFrame implements ActionListener{
+	Logger logger = Logger.getLogger(getClass().getSimpleName());
     
      JLabel lblId, lblPwd, lblPwd2, lblName, lblGen,lblAge,IbImail ;
      JTextField txtId, txtPwd,txtPwd2, txtName,txtmail;
@@ -23,8 +30,8 @@ public class MemberRegister extends JFrame{
      JButton repeat = new JButton("중복확인");
      public MemberRegister() {
     	 super("회원가입");
-    	 
-    	 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	 setTitle("회원가입");
+    	 setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
           
           setLayout(null);
           
@@ -81,6 +88,8 @@ public class MemberRegister extends JFrame{
          
           btnCancel = new JButton("취소");       
           btnSubmit = new JButton("가입완료");
+          btnSubmit.addActionListener(this);
+          
           
           //btnCancel.setSize(150, 40 );
           //btnSubmit.setSize(150, 40);
@@ -109,13 +118,27 @@ public class MemberRegister extends JFrame{
           add(paButton);
           add(txtmail);
           
-          setSize(370, 370);
-          setResizable(false);
-          setVisible(true);
+          setSize(370, 450);
+          //setResizable(false);
+          
          
      }
     
-     public static void main(String[] args) {
-          new MemberRegister();
-     }   
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		if(evt.getSource() == btnSubmit) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("http://game.bacoder.kr/signup.jsp?");
+			builder.append("&login=").append(txtId.getText());
+			builder.append("&pwd=").append(txtPwd.getText());
+			builder.append("&username=").append(txtName.getText());
+			builder.append("&age=").append(txtAge.getText());
+			builder.append("&mail=").append(txtmail.getText());
+			
+			logger.info(builder.toString());
+			final String returnStr = GetStringUtil.getStringFromUrl(builder.toString());
+			
+			logger.info("returnStr: "+ returnStr);
+		}
+	}   
 }
