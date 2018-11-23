@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.json.JSONArray;
@@ -31,8 +32,10 @@ public class Makelogin implements ActionListener {
 	JLabel jl = new JLabel("끝말잇기");
 
 	JTextField id = new HintTextField("아이디");
-	JTextField pw = new HintTextField("비밀번호");
-
+	JTextField pw = new JPasswordField("비밀번호");
+	
+	
+	
 	JLabel result;
 	JButton btnlogin = new JButton("로그인");
 	JButton btnjoin = new JButton("회원가입");
@@ -48,6 +51,7 @@ public class Makelogin implements ActionListener {
 		frame.getContentPane().add(jl);
 		//frame.getContentPane().add(id);
 		//frame.getContentPane().add(pw);
+		
 		final int hGap = 10;
 		final int vGap = 20;
 
@@ -79,7 +83,7 @@ public class Makelogin implements ActionListener {
 		jl.setFont(new Font(null, Font.BOLD, 25));
 		jl.setHorizontalAlignment(JLabel.CENTER);
 
-
+		
 		//btnlogin.setBounds(140, 270, 100, 40);
 		//btnjoin.setBounds(250, 270, 100, 40);
 		//btnvoca.setBounds(380, 320, 100, 20);
@@ -97,34 +101,38 @@ public class Makelogin implements ActionListener {
 		//frame.add(jp);
 		btnlogin.addActionListener(this);
 		btnjoin.addActionListener(this);
+		pw.addActionListener(this);
+		
 
 		frame.validate();
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		if(evt.getSource() == btnlogin) {
 			GetStringUtil util = new GetStringUtil();	
+			StringBuilder builder = new StringBuilder();
+			builder.append("http://game.bacoder.kr/login.jsp")
+			.append("?login=").append(id.getText())
+			.append("&pwd=").append(pw.getText());
+
+
+			String result = GetStringUtil.getStringFromUrl(builder.toString());
+			JSONObject json = new JSONObject(result);
+			if(json.getJSONArray("list").length() == 1) {
+				JSONArray array = json.getJSONArray("list");
+				JSONObject userInfo = array.getJSONObject(0);
+				GameUser user = GameUser.parseTo(userInfo);
+				logger.info(user.toString());
+				//게임 frame 시작
+			}else {
+				logger.info("login failed");
+			}
 		}else if(evt.getSource() == btnjoin) {
 			new MemberRegister().setVisible(true);;
 		}
-		StringBuilder builder = new StringBuilder();
-		builder.append("http://game.bacoder.kr/login.jsp")
-		.append("?login=").append(id.getText())
-		.append("&pwd=").append(pw.getText());
-
-
-		String result = GetStringUtil.getStringFromUrl(builder.toString());
-		JSONObject json = new JSONObject(result);
-		if(json.getJSONArray("list").length() == 1) {
-			JSONArray array = json.getJSONArray("list");
-			JSONObject userInfo = array.getJSONObject(0);
-			GameUser user = GameUser.parseTo(userInfo);
-			logger.info(user.toString());
-			//게임 frame 시작
-		}else {
-			logger.info("login failed");
-		}
+		
 	}
 	class HintTextField extends JTextField implements FocusListener {
 
