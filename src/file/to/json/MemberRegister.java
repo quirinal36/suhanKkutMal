@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ public class MemberRegister extends JFrame implements ActionListener{
 	Logger logger = Logger.getLogger(getClass().getSimpleName());
 
 	JLabel lblId, lblPwd, lblPwd2, lblName,lblAge,IbImail ;
-	JTextField txtId, txtName,txtmail,txtpwCom;
+	JTextField txtId, txtName,txtmail,txtpwCom,txtIdcom;
 	JPasswordField  txtPwd,txtPwd2;
 	JSONObject obj = new JSONObject();
 	boolean PassWordSame = false;
@@ -68,6 +69,7 @@ public class MemberRegister extends JFrame implements ActionListener{
 		add(IbImail);
 		add(btnrepeat);
 		
+		txtIdcom = new JTextField(10);
 		txtpwCom = new JTextField(10); 
 		txtId =new JTextField(20);
 		txtPwd =new JPasswordField(20);
@@ -88,14 +90,14 @@ public class MemberRegister extends JFrame implements ActionListener{
 				if (Arrays.equals(jpwText, jpw2Text)) {
 					logger.info("same");
 					PassWordSame = true;
-					
+					txtpwCom.setText("같습니다."); 
 				}
-				else if(Arrays.equals(jpwText, jpw2Text)) {
-					JTextField txtpwCom  = new JTextField("중복입니다."); 
-				}else {
+				else {
 					logger.info("다름니다.");
 					PassWordSame = false;
+					txtpwCom.setText("다름니다."); 
 				}
+				 
 			}
 			
 			@Override
@@ -155,6 +157,7 @@ public class MemberRegister extends JFrame implements ActionListener{
 		txtAge.setBounds(130, 170, 150, 20);
 		txtmail.setBounds(130, 237, 150, 20);
 		txtpwCom.setBounds(290,110,90,20);
+		txtIdcom.setBounds(290,80,100,20);
 		JPanel paButton = new JPanel();
 		paButton.add(btnSubmit);
 		paButton.add(btnCancel);
@@ -171,8 +174,9 @@ public class MemberRegister extends JFrame implements ActionListener{
 		add(paButton);
 		add(txtmail);
 		add(txtpwCom);
+		add(txtIdcom);
 
-		setSize(450, 450);
+		setSize(470, 479);
 
 	}
 	private String getPasswordText(){
@@ -215,8 +219,12 @@ public class MemberRegister extends JFrame implements ActionListener{
 			int resultId = json.getInt("result");
 			if(resultId >0) {
 				logger.info("이미 존재하는 아이디입니다");
+				txtIdcom.setText("중복된 아이디");
+				JOptionPane.showMessageDialog(null,"이미 존재하는 아이디입니다");
 			}else {
 				logger.info("사용하셔도 됩니다.");
+				txtIdcom.setText("사용 가능");
+				
 			}
 		}
 		else if (evt.getSource() == btnCancel) {

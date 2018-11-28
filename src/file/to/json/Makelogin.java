@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -33,8 +34,8 @@ public class Makelogin implements ActionListener {
 
 	JTextField id = new HintTextField("아이디");
 	JTextField pw = new JPasswordField("비밀번호");
-	
-	
+	private boolean bLoginCheck;
+	private MainClass main;
 	
 	JLabel result;
 	JButton btnlogin = new JButton("로그인");
@@ -49,8 +50,6 @@ public class Makelogin implements ActionListener {
 		frame.setVisible(true); 
 		frame.getContentPane().setLayout(new GridLayout(4,1));
 		frame.getContentPane().add(jl);
-		//frame.getContentPane().add(id);
-		//frame.getContentPane().add(pw);
 		
 		final int hGap = 10;
 		final int vGap = 20;
@@ -77,37 +76,16 @@ public class Makelogin implements ActionListener {
 		btnPanel.add(btnCenterPanel,BorderLayout.CENTER);
 		frame.getContentPane().add(btnPanel);
 
-
-
-
 		jl.setFont(new Font(null, Font.BOLD, 25));
 		jl.setHorizontalAlignment(JLabel.CENTER);
 
-		
-		//btnlogin.setBounds(140, 270, 100, 40);
-		//btnjoin.setBounds(250, 270, 100, 40);
-		//btnvoca.setBounds(380, 320, 100, 20);
-
-		//id.setBounds(200, 140, 100, 50);
-		//pw.setBounds(200, 210, 100, 50);
-
-		//jp.add(btnlogin);
-		//jp.add(id); // jp라는 패널에 tf라는 텍스트필드 추가
-		//jp.add(btnjoin);
-		//jp.add(pw); 
-		//jp.add(btnvoca);
-		//jp.add(jl); 
-
-		//frame.add(jp);
 		btnlogin.addActionListener(this);
 		btnjoin.addActionListener(this);
 		pw.addActionListener(this);
 		
-
 		frame.validate();
 	}
 	
-
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		if(evt.getSource() == btnlogin) {
@@ -126,8 +104,10 @@ public class Makelogin implements ActionListener {
 				GameUser user = GameUser.parseTo(userInfo);
 				logger.info(user.toString());
 				//게임 frame 시작
+				new Gameview().setVisible(true);
 			}else {
 				logger.info("login failed");
+				JOptionPane.showMessageDialog(null, "로그인이 실패하였습니다.");
 			}
 		}else if(evt.getSource() == btnjoin) {
 			new MemberRegister().setVisible(true);;
@@ -167,5 +147,12 @@ public class Makelogin implements ActionListener {
 			return showingHint ? "" : super.getText();
 		}
 
+	}
+	
+	public boolean isLogin() {		
+		return bLoginCheck;
+	}
+	public void setMain(MainClass main) {
+		this.main = main;
 	}
 }
