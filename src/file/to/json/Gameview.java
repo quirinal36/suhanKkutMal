@@ -18,32 +18,43 @@ import javax.swing.JTextField;
 
 public class Gameview extends JFrame implements ActionListener{
 	Logger logger = Logger.getLogger(getClass().getSimpleName());
-	
-	JPanel panel = new JPanel();
-	JLabel me = new JLabel("나");
-	JLabel you = new JLabel("상대");
-	JLabel labelTimer = new JLabel("타이머");
-	JButton button = new JButton("new game");
-	
-	JButton btnInput = new JButton("입력");
-	
-	JTextField input = new JTextField("입력창");
-	JTextField output = new JTextField("결과창");
+
+	private JLabel me;
+	private JLabel you;
+	private JLabel labelTimer;
+	private JButton button;
+	private JButton btnInput;
+	private JTextField input;
+	private JTextField output;
+
 	Timer timerSec = new Timer();
 	int sec;
 	public Gameview()
 	{
-		JFrame frame = new JFrame("GAME");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		setSize(500, 400);
+		getContentPane().setLayout(new GridLayout(2,4));
+		init();
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setSize(500, 400);
-		frame.setVisible(true);
-		frame.getContentPane().setLayout(new GridLayout(2,4));
-		
-		frame.getContentPane().add(me);
-		frame.getContentPane().add(labelTimer);
-		frame.getContentPane().add(you);
-		
+		validate();
+	}
+
+	private void init() {
+		me = new JLabel("나");
+		you = new JLabel("상대");
+		labelTimer = new JLabel("타이머");
+		button = new JButton("new game");
+
+		btnInput = new JButton("입력");
+
+		input = new JTextField("입력창");
+		output = new JTextField("결과창");
+		timerSec = new Timer();
+
+		getContentPane().add(me);
+		getContentPane().add(labelTimer);
+		getContentPane().add(you);
+
 
 		final int hGap = 10;
 		final int vGap = 20;
@@ -53,9 +64,9 @@ public class Gameview extends JFrame implements ActionListener{
 				BorderFactory.createEmptyBorder(hGap, vGap, hGap,vGap));
 
 		ipPanel.add(input,BorderLayout.CENTER);
-		
-		frame.getContentPane().add(ipPanel);
-		
+
+		getContentPane().add(ipPanel);
+
 		JPanel btnPanel = new JPanel(new BorderLayout(50,30));
 		btnPanel.setBorder(BorderFactory.createEmptyBorder(hGap, vGap, hGap, vGap));
 		JPanel btnCenterPanel = new JPanel(new GridLayout(2,4,20,0));
@@ -63,71 +74,58 @@ public class Gameview extends JFrame implements ActionListener{
 		btnCenterPanel.add(btnInput);
 		btnCenterPanel.add(button);
 		btnPanel.add(btnCenterPanel,BorderLayout.CENTER);
-		frame.getContentPane().add(btnPanel);
-		
+		getContentPane().add(btnPanel);
 
 		JPanel opPanel = new JPanel(new BorderLayout(20,20));
 		opPanel.setBorder(
 				BorderFactory.createEmptyBorder(hGap, vGap, hGap,vGap));
 
 		opPanel.add(output,BorderLayout.CENTER);
-		
-		frame.getContentPane().add(opPanel);
-		
+
+		getContentPane().add(opPanel);
+
 		JPanel tiPanel = new JPanel(new BorderLayout(20,20));
 		tiPanel.setBorder(
 				BorderFactory.createEmptyBorder(hGap, vGap, hGap,vGap));
 
-		
-		
-		
-		
-
 		me.setFont(new Font(null, Font.BOLD, 30));
 		me.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		labelTimer.setFont(new Font(null, Font.BOLD, 30));
 		labelTimer.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		you.setFont(new Font(null, Font.BOLD, 30));
 		you.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		btnInput.addActionListener(this);
 
-		
-		button.addActionListener(this);
-	
-		
 
-		frame.validate();
+		button.addActionListener(this);
 	}
-	
-	
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
 		if(evt.getSource() == button) {
-		sec = 0;
-		timerSec.cancel();
-		timerSec = new Timer();
+			sec = 15;
+			timerSec.cancel();
+			timerSec = new Timer();
 
-		timerSec.scheduleAtFixedRate(new TimerTask() {
+			timerSec.scheduleAtFixedRate(new TimerTask() {
 
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				labelTimer.setText("  " +sec+" 초");
-				sec=sec+1;
-			}
-		},500,1000);
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					labelTimer.setText("  " +sec+" 초");
+					sec--;
+					if(sec <0) {
+						//제한시간이 지났습니다.
+						timerSec.cancel();
+						logger.info("제한시간이 지났습니다");
+					}
+				}
+			},500,1000);
+		}
 	}
-	}
 
-
-	public static void main(String[] args) {
-		
-		new Gameview();
-
-	}
 }
