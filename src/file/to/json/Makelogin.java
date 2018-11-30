@@ -113,7 +113,7 @@ public class Makelogin extends JFrame implements ActionListener {
 		if(evt.getSource() == btnlogin) {
 			//로그인 URL 만들기
 			StringBuilder builder = new StringBuilder();
-			builder.append("http://game.bacoder.kr/login.jsp")
+			builder.append("http://35.189.134.45/DictionaryGameServer/login.jsp")
 					.append("?login=").append(id.getText())
 					.append("&pwd=").append(pw.getText());
 

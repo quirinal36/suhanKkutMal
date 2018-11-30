@@ -161,7 +161,7 @@ public class MemberRegister extends JFrame implements ActionListener, DocumentLi
 		else if (evt.getSource() == btnrepeat) {
 			//존재하는 아이디인지 판별하는 URL
 			StringBuilder builder = new StringBuilder();
-			builder.append("http://game.bacoder.kr/existId.jsp?")
+			builder.append("http://35.189.134.45/DictionaryGameServer/existId.jsp?")
 			.append("&login=").append(txtId.getText());
 			
 			//존재하는 아이디인지 아닌지에 대한 결과값
