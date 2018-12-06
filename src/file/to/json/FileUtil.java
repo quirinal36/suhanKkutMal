@@ -13,6 +13,32 @@ import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 
 public class FileUtil {
+	public List<String> getvoca(){
+		List<String> result = new ArrayList<String>();
+		
+		File file = new File("resource", "voca.txt");
+		try {
+			List<String> inputList = FileUtils.readLines(file, StandardCharsets.UTF_8.name());
+			for(String line : inputList) {			
+				// tab 으로 구분되어있는 영어 / 한글 을 분단시킨다.
+				final int index = line.indexOf("\t");
+				if(index > 0) {
+					String voca = line.substring(0, index);
+					if(voca.length() > 1) {
+						// 단어의 길이가 1개 이상일때만 저장한다.
+						String voca_kor = line.substring(index, line.length());
+						result.add(voca);
+						
+					}
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static void main(String[] args) {
 		// 모든 voca 를 저장할 장소
 		Map<String, String> map = new HashMap<>();

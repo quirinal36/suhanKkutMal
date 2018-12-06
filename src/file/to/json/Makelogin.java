@@ -103,6 +103,7 @@ public class Makelogin extends JFrame implements ActionListener {
 
 		btnlogin.addActionListener(this);
 		btnjoin.addActionListener(this);
+		btnvoca.addActionListener(this);
 		pw.addActionListener(this);
 		
 		validate();
@@ -138,7 +139,9 @@ public class Makelogin extends JFrame implements ActionListener {
 			}
 		}else if(evt.getSource() == btnjoin) {
 			//회원 가입 버튼 클릭 했을때
-			new MemberRegister().setVisible(true);;
+			new MemberRegister().setVisible(true);
+		}else if(evt.getSource() == btnvoca) {
+			new DictionaryList("단어장").setVisible(true);
 		}
 		
 	}
