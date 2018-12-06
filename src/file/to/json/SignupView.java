@@ -72,7 +72,7 @@ public class SignupView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("http://game.bacoder.kr/signup.jsp")
+		builder.append("http://35.189.134.45/DictionaryGameServer/signup.jsp")
 		.append("?login=").append(loginInput.getText())
 		.append("&pwd=").append(pwdInput.getText())
 		.append("&username=").append(userNameInput.getText());

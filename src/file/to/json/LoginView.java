@@ -104,7 +104,7 @@ public class LoginView extends JFrame implements ActionListener{
 			
 			//로그인 URL 만들기(parameter : login,pwd)
 			StringBuilder builder = new StringBuilder();
-			builder.append("http://game.bacoder.kr/login.jsp")
+			builder.append("http://35.189.134.45/DictionaryGameServer/login.jsp")
 					.append("?login=").append(idText.getText())
 					.append("&pwd=").append(pwdText.getText());
 			//로그인 결과 가져오기

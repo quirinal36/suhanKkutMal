@@ -136,7 +136,7 @@ public class MemberRegister extends JFrame implements ActionListener, DocumentLi
 			if( PassWordSame) {
 				//회원가입 URL
 				StringBuilder builder = new StringBuilder();
-				builder.append("http://game.bacoder.kr/signup.jsp?");
+				builder.append("http://35.189.134.45/DictionaryGameServer/signup.jsp?");
 				builder.append("&login=").append(txtId.getText());
 				builder.append("&pwd=").append(getPasswordText());
 				builder.append("&username=").append(txtName.getText());
@@ -175,6 +175,7 @@ public class MemberRegister extends JFrame implements ActionListener, DocumentLi
 		//		txtIdcom.setText("중복된 아이디");
 				JOptionPane.showMessageDialog(null,"이미 존재하는 아이디입니다");
 			}else {
+				JOptionPane.showMessageDialog(null,"사용하셔도 됩니다.");
 				logger.info("사용하셔도 됩니다.");
 		//		txtIdcom.setText("사용 가능");
 				

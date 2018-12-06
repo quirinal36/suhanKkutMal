@@ -14,7 +14,7 @@ import org.jsoup.nodes.Document;
 public class GetStringUtil {
 	public static void main(String[] args) {
 			System.out.println(
-					getStringFromUrl("http://game.bacoder.kr/existId.jsp?&login=suhan").trim());
+					getStringFromUrl("http://35.189.134.45/DictionaryGameServer/existId.jsp?&login=suhan").trim());
 	}
 	/**
 	 * HTML 파일을 열어서 안의 내용물을 조회하는 함수
